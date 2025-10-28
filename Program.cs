@@ -1,20 +1,24 @@
-﻿List<int> integers = new List<int> { 1, 2, 3, 4, 5, 6 };
-
-// newCollection != List, det er en spørring
-var newCollection = integers
-                    // Filtrer ut all partall
-                    .Where(n => n % 2 == 0)
-                    // Multipliser de med 2
-                    .Select(n => n * 2)
-                    // Så filtrer ut all som er større enn 4
-                    .Where(n => n > 4)
-                    // Evaluer spørringen
-                    .ToList();
-
-integers.Add(14);
-
-Console.WriteLine("The new collection");
-foreach (int number in newCollection)
+﻿var contacts = new List<Contact>
 {
-  Console.WriteLine(number);
+  new() { Name = "Lars", Email = "lars.gunnar@jobloop.no", Location = "Vestfold" },
+  new() { Name = "John", Email = "john@jobloop.no", Location = "Oslo" },
+  new() { Name = "Jørgen", Email = "jørgen@jobloop.no", Location = "Bergen" },
+  new() { Name = "Joel", Email = "joel@jobloop.no", Location = "Vestfold" },
+};
+
+// Hente ut mail address for veileder i Vestfold
+var newList = contacts
+                .Where(contact => contact.Location == "Vestfold")
+                .Select(contact => new { Email = contact.Email, Name = contact.Name });
+
+foreach (var details in newList)
+{
+  Console.WriteLine($"Sending email to: {details.Name} with address: {details.Email}");
+}
+
+class Contact
+{
+  public required string Name { get; set; }
+  public required string Email { get; set; }
+  public required string Location { get; set; }
 }
